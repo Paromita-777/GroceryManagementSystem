@@ -213,7 +213,14 @@ employees.post('/login', async(req, res) =>{
     )
     
     // Return JWT token
-    return res.send({token: jwtToken})
+    return res.send({
+      token: jwtToken,
+      employee:{
+        empId:employee.empId,
+        username:employee.username,
+        roles:employee.roles?? []
+      }
+    })
   }
 );
 // Export/return the Router to the calling code
