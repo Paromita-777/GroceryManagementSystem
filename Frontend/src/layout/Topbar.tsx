@@ -1,28 +1,17 @@
-import { useNavigate } from "react-router-dom";
+import LogoutButton from "../components/LogoutButton";
 
 export default function Topbar() {
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
-
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+  
   return (
-    <nav className="navbar navbar-light bg-white shadow-sm px-4">
-      <span className="navbar-brand mb-0 h5">Product Dashboard</span>
+    <nav className="navbar navbar-light bg-white shadow-sm px-4 d-flex justify-content-between align-items-center">
 
-      <div className="d-flex gap-3 align-items-center">
-        <input
-          className="form-control form-control-sm"
-          placeholder="Search products..."
-          style={{ width: "200px" }}
-        />
+      <p className="mb-0">
+         Welcome <b>{user.username || "Guest"}</b>
+      </p>
+      <LogoutButton />
 
-        <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
     </nav>
   );
 }
