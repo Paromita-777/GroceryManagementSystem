@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+// service function that calls backend API for registration
 import { registerEmployee } from "../services/authService";
 
 export default function EmployeeRegistrationForm() {
@@ -16,17 +17,20 @@ export default function EmployeeRegistrationForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
+      // update only the changed field using input "name"
       [e.target.name]: e.target.value
     });
   };
 
+  // Handle form submission 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
+      // calling backend API via service function 
       const response = await registerEmployee(form);
-
       console.log("REGISTER RESPONSE:", response);
+      // success message to user
       alert("Employee registered successfully!");
       navigate("/login");
 

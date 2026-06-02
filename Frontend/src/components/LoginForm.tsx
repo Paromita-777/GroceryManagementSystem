@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { loginEmployee } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import LoginFields from "./LoginFields";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
@@ -8,28 +9,39 @@ export default function LoginForm() {
 
   const navigate = useNavigate();
 
+
+  // -----------------------------
+  // HANDLE LOGIN SUBMISSION
+  // -----------------------------
   const handleLogin = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
+    // Prevent page reload on form submit
     e.preventDefault();
-
     try {
+       // Call backend login API via service function
       const response = await loginEmployee(username, password);
 
-      // 🔍  DEBUG LOGS 
-    console.log("TOKEN:", localStorage.getItem("token"));
-    console.log("USER:", localStorage.getItem("user"));
-
+      // DEBUG LOGS for development only
+      console.log("TOKEN:", localStorage.getItem("token"));
+      console.log("USER:", localStorage.getItem("user"));
       console.log("LOGIN RESPONSE:", response);
 
+       // -----------------------------
+      // NAVIGATION AFTER SUCCESS LOGIN
+      // -----------------------------
       navigate("/dashboard");
 
     } catch (error) {
+      // If login fails (wrong credentials, server error, etc.)
       console.log("Login error:", error);
-
       alert("Invalid credentials");
     }
   };
+
+   // -----------------------------
+  // UI SECTION (FORM)
+  // -----------------------------
 
   return (
     <>
@@ -39,27 +51,13 @@ export default function LoginForm() {
 
       <form onSubmit={handleLogin}>
 
-        <div className="mb-3">
-          <label className="form-label">Username</label>
-
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <LoginFields
+         username = {username}
+         password = {password}
+         setUsername={setUsername}
+         setPassword={setPassword}
+         >
+        </LoginFields>
 
         <button
           type="submit"
