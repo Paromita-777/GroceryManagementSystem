@@ -16,6 +16,10 @@ export default function LoginForm() {
     try {
       const response = await loginEmployee(username, password);
 
+      // 🔍  DEBUG LOGS 
+    console.log("TOKEN:", localStorage.getItem("token"));
+    console.log("USER:", localStorage.getItem("user"));
+
       console.log("LOGIN RESPONSE:", response);
 
       navigate("/dashboard");

@@ -1,5 +1,6 @@
 import api from "../api/axios";
-import type { LoginResponse } from "../types/Auth";
+import type { LoginResponse, RegisterRequest } from "../types/Auth";
+
 
 // login
 export const loginEmployee = async(username: string, password: string) =>{
@@ -17,9 +18,21 @@ export const loginEmployee = async(username: string, password: string) =>{
   return response.data;
 }
 
+// Register 
+export const registerEmployee = async (employeeData: RegisterRequest) => {
+  const response = await api.post("/employees/register", {
+    firstName: employeeData.firstName,
+    lastName: employeeData.lastName,
+    username: employeeData.username,
+    password: employeeData.password,
+  });
+
+  return response.data;
+};
+
 // logout
 
 export const logoutUser = ()=>{
   localStorage.removeItem("token");
-  window.location.href = "/"
+  localStorage.removeItem("user");
 }

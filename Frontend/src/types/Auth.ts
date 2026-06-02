@@ -6,3 +6,9 @@ export type LoginResponse = {
     roles: string[];
   };
 };
+export interface RegisterRequest {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+}

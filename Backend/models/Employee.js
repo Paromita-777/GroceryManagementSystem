@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define Mongoose schema's properties/structure
-// DOCS: Each schema maps to a MongoDB collection and defines the shape of the documents within that collection.
-// DOCS: By default, Mongoose adds an _id property to your schemas.
-
 // Counter Schema for empId
 const empIdCounterSchema = new mongoose.Schema({
     _id:{
@@ -77,7 +73,7 @@ const employeeSchema = new mongoose.Schema({
     },
     roles:{
         types:[String],
-        default:[]
+        default:['user']
     }
 }, {timestamps:true})
 
@@ -89,7 +85,7 @@ employeeSchema.pre('save', async function(next){
             _id:'employee'
         },
         {
-            $inc:{seq:113}
+            $inc:{seq:1}
         },
         {
             new:true,
